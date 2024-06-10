@@ -36,7 +36,9 @@ class AnnualReportChatbot:
     def run(self):
         st.set_page_config(page_title="RAG ChatBot")
         st.title("Annual Report Chatbot")
-        st.markdown("This chatbot aims to answer user questions based on annual reports of two companies: Airbus and Singapore Airlines. Chatbot uses the RAG technique to fetch relevant contexts from documents to answer questions. ")
+        st.markdown("This chatbot aims to answer user questions based on annual reports of two companies: Airbus and "
+                    "Singapore Airlines. Chatbot uses the RAG technique to fetch relevant contexts from documents to "
+                    "answer questions. ")
         st.markdown("Choose a document to query:")
         self.doc_name = st.selectbox(
             "Choose a document to query:",
