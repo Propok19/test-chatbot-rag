@@ -8,13 +8,14 @@ from langchain.chains.history_aware_retriever import create_history_aware_retrie
 from langchain.chains.combine_documents import create_stuff_documents_chain
 from langchain_core.messages import HumanMessage
 
-from config import settings
 from enums.prompt_templates import PromptTemplates
+
+import streamlit as st
 
 
 class PdfRAG:
     def __init__(self):
-        self.llm = ChatOpenAI(model_name="gpt-4o", temperature=0, openai_api_key=settings.OPENAI_API_KEY)
+        self.llm = ChatOpenAI(model_name="gpt-4o", temperature=0, openai_api_key=st.secrets["OPENAI_API_KEY"])
         self.retrievers = {"documents/annualreport2223.pdf": self.init_retriever("documents/annualreport2223.pdf"),
                            "documents/Airbus-Annual-Report-2023.pdf": self.init_retriever("documents/Airbus-Annual-Report-2023.pdf"),
                            }
@@ -26,7 +27,7 @@ class PdfRAG:
 
 
     def init_retriever(self, filepath: str):
-        db_connection = Chroma(persist_directory=f'./{filepath}_db/', embedding_function=OpenAIEmbeddings(openai_api_key=settings.OPENAI_API_KEY))
+        db_connection = Chroma(persist_directory=f'./{filepath}_db/', embedding_function=OpenAIEmbeddings(openai_api_key=st.secrets["OPENAI_API_KEY"]))
         return db_connection.as_retriever()
 
     def get_answer(self, question: str, doc: str):
